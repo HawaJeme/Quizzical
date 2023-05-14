@@ -1,1 +1,1 @@
-# Quizzical
+# Quizzical solo project
