@@ -1,0 +1,40 @@
+*{
+    box-sizing: border-box;
+}
+html, body{
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: #F5F7FB;
+}
+button{
+    cursor: pointer;
+}
+
+.interface{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    font-family: 'Karla', sans-serif;
+    color: #293264;
+}
+.interface > h2 {
+    font-size: 40px;
+    margin: 0;
+    text-shadow: 1.5px 1.5px 1px rgb(63, 97, 124);
+}
+#start-quiz{
+    width: 193px;
+    height: 52px;
+    margin: 10px 0;
+    background: #4D5B9E;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 18px;
+    text-shadow: 0.8px 0.5px black;
+}
