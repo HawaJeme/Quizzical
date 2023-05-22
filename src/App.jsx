@@ -1,45 +1,49 @@
 import  Interface  from '../components/interface.jsx'
 import  Questions  from '../components/Questions.jsx'
-import {decode} from 'html-entities';
+// import {decode} from 'html-entities';
 import React from "react"
 
 
 function App() {
-const [questionObjs, setQuestionObjs] = React.useState([])
-
-addEventListener('click', (e)=> {
-  if(e.target.id === "start-quiz"){
-    ApiFetch()
-  }
-})
-
+  const [questionObjs, setQuestionObjs] = React.useState([])
+  const [quizStart, setQuizStart] = React.useState(false)
+ 
   React.useEffect(()=>{
     fetch("https://opentdb.com/api.php?amount=10&type=multiple")
       .then(Response => Response.json())
       .then(data => {
           const results = data.results
+          const arr = []
           for(let i=0; i < results.length; i++){
             const obj = results[i]
-            // const arr = []
-            setQuestionObjs(obj)
-          }})
+            arr.push(obj)
+          }
+          setQuestionObjs(arr)
+        })
   }, [])
 
-  console.log(questionObjs)
-  // const answers = []
-  // const questionElements = questionObjs.map(obj =>{
-  //   <Questions
-  //     question={obj.question}
-  //     correctAns={obj.correct_answer}
-  //     incorrectAns={obj.incorrect_answers}
-  //   />
-  // })
+  addEventListener('click', (e)=> {
+    if(e.target.id === "start-quiz"){
+      document.querySelector(".interface").style.display = "none"
+      setQuizStart(true)
+    }
+  })
 
-  console.log('test')
+  console.log(questionObjs)
+  const questionElements = questionObjs.map(obj =>{
+    return <Questions
+      question={obj.question}
+      correctAns={obj.correct_answer}
+      incorrectAns={obj.incorrect_answers}
+    />
+  })
+
   return (
     <>
       <Interface />
-      {questionElements}
+      <div className='quesContainer'>
+        {quizStart && questionElements}
+      </div>
     </>
   )
 }
