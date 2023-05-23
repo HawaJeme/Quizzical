@@ -1,7 +1,6 @@
-import  Interface  from '../components/interface.jsx'
+import  Interface  from '../components/Interface.jsx'
 import  Questions  from '../components/Questions.jsx'
-// import {decode} from 'html-entities';
-import React from "react"
+import  React from "react"
 
 
 function App() {
@@ -21,17 +20,25 @@ function App() {
           setQuestionObjs(arr)
         })
   }, [])
+  React.useEffect(()=> {
+    addEventListener('click', (e)=> {
+      if(e.target.id === "start-quiz"){
+        document.querySelector(".interface").style.display = "none"
+        setQuizStart(true)
+      }
+    })
+  }, [])
+  console.log(quizStart)
 
-  addEventListener('click', (e)=> {
-    if(e.target.id === "start-quiz"){
-      document.querySelector(".interface").style.display = "none"
-      setQuizStart(true)
-    }
-  })
+  function handleForm(e){
+    e.stopPropagation()
+    e.preventDefault()
+    console.log(e.target)
+  }
 
-  console.log(questionObjs)
-  const questionElements = questionObjs.map(obj =>{
+  const questionElements = questionObjs.map((obj, index) =>{
     return <Questions
+      keys={index}
       question={obj.question}
       correctAns={obj.correct_answer}
       incorrectAns={obj.incorrect_answers}
@@ -41,9 +48,10 @@ function App() {
   return (
     <>
       <Interface />
-      <div className='quesContainer'>
-        {quizStart && questionElements}
-      </div>
+      {quizStart && <form id='quesContainer' onSubmit={handleForm}>
+        {questionElements}
+        <button id='checkAns'>Check your answers</button>
+      </form>}
     </>
   )
 }

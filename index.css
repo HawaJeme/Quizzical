@@ -12,6 +12,14 @@ html, body{
 button{
     cursor: pointer;
 }
+input[type="radio"] {
+    -webkit-appearance: none;
+    appearance: none;
+    margin: 0;
+}
+input[type="radio"]:checked {
+    background-color: red;
+}
 
 .interface{
     display: flex;
@@ -27,7 +35,7 @@ button{
     margin: 0;
     text-shadow: 1.5px 1.5px 1px rgb(63, 97, 124);
 }
-#start-quiz{
+#start-quiz, #checkAns{
     width: 193px;
     height: 52px;
     margin: 10px 0;
@@ -38,6 +46,9 @@ button{
     font-size: 18px;
     text-shadow: 0.8px 0.5px black;
 }
+#checkAns{
+    justify-items: center;
+}
 .answer{
     display: inline-block;
     padding: 8px 10px;
@@ -46,7 +57,7 @@ button{
     background-color: #D6DBF5;
     font-size: 18px;
 }
-.quesContainer{
+#quesContainer{
     padding: 50px 100px;
     display: flex;
     flex-direction: column;
