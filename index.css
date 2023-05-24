@@ -17,9 +17,6 @@ input[type="radio"] {
     appearance: none;
     margin: 0;
 }
-input[type="radio"]:checked {
-    background-color: red;
-}
 
 .interface{
     display: flex;
@@ -47,23 +44,29 @@ input[type="radio"]:checked {
     text-shadow: 0.8px 0.5px black;
 }
 #checkAns{
-    justify-items: center;
+    display: block;
+    margin: 50px auto;
 }
 .answer{
     display: inline-block;
     padding: 8px 10px;
     border: 1px solid #293264;
     border-radius: 12px;
-    background-color: #D6DBF5;
+    background-color: transparent;
     font-size: 18px;
 }
 #quesContainer{
     padding: 50px 100px;
     display: flex;
     flex-direction: column;
+    color: #293264;
 }
 .ansDiv{
     width: fit-content;
     display: flex;
     gap: 20px;
+}
+
+.checkedHighlight{
+    background-color: #D6DBF5;
 }

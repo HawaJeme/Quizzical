@@ -8,14 +8,19 @@ export default function Questions(props){
 
     const answerElements = answers.map(ans => {
         return (
-            <label className="answer">
-                <input type="radio" name={`${props.keys}`} value={ans}></input>{decode(ans)}
+            <label className="answer" id={props.keys}>
+                <input type="radio"
+                    name={`${props.keys}`}
+                    value={ans}
+                    onClick={(e)=> props.highlightAns(e)}>
+                </input>
+                {decode(ans)}
             </label>
         )
     })
     return(
         <>
-            <h3>{decode(props.question)}</h3>
+            <h2>{decode(props.question)}</h2>
             <div className="ansDiv" >{answerElements}</div>
             <br></br>
         </>
