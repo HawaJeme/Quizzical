@@ -8,9 +8,11 @@ function App() {
   const [questionObjs, setQuestionObjs] = useState([])
   const [quizStart, setQuizStart] = useState(false)
   const highlights = document.getElementsByClassName('checkedHighlight')
- 
+  let correctAns = []
+  let scores = 0
+
   useEffect(()=>{
-    fetch("https://opentdb.com/api.php?amount=10&type=multiple")
+    fetch("https://opentdb.com/api.php?amount=5&type=multiple")
       .then(Response => Response.json())
       .then(data => {
           const results = data.results
@@ -32,26 +34,26 @@ function App() {
   function handleSubmit(e){
     e.stopPropagation()
     e.preventDefault()
-    let correctAns = []
-    let selectedAns = []
 
-    for(let i=0; i < highlights.length; i++){
-      selectedAns.push(decode(highlights[i].children[0].value))
+    if(document.getElementById("checkAns").textContent === 'Play again'){
+      location.reload()
     }
-    
-    // console.log(selectedAns)
-    questionObjs.map(obj =>{
+    questionObjs.map(obj =>{    // to check correct answers
       correctAns.push(decode(obj.correct_answer))
       for (let ans of document.getElementsByClassName('answer')){
-        if(correctAns.includes(ans.children[0].value)){
+        if(correctAns.includes(decode(ans.children[0].value))){
           ans.style.backgroundColor = "#4CB261" // green
         }
-        else if(ans.children[0].value !== decode(obj.correct_answer) && ans.classList.contains('checkedHighlight') ){
+        else if(ans.children[0].value !== decode(obj.correct_answer)
+        && ans.classList.contains('checkedHighlight')){
           ans.style.backgroundColor = "#F88686" //red
         }
       }
     })
-    // console.log(correctAns)
+    calculateScores()
+    document.querySelector(".scoreElement").textContent = `You've scored ${scores} / 5 correct answers`
+    document.querySelector(".scoreElement").style.display = "inline"
+    document.getElementById("checkAns").textContent = 'Play again'
   }
   function highlightAns(e){
     for (let highlight of highlights){ // For removing highlighted answers of the same question
@@ -59,7 +61,14 @@ function App() {
         highlight.classList.remove('checkedHighlight')
       }
     }
-    e.target.parentElement.classList.add("checkedHighlight")
+    e.target.parentElement.classList.add("checkedHighlight") // adding highlight class to checked answers
+  }
+  function calculateScores(){
+    for(let highlight of highlights){
+      if(correctAns.includes(decode(highlight.children[0].value))){
+        scores++
+      }
+    }
   }
 
   const questionElements = questionObjs.map((obj, index) =>{
@@ -77,7 +86,10 @@ function App() {
       <Interface />
       {quizStart && <form id='quesContainer' onSubmit={handleSubmit}>
         {questionElements}
-        <button id='checkAns'>Check your answers</button>
+        <div className='scoreDiv'>
+          <h3 className='scoreElement'></h3>
+          <button id='checkAns'>Check your answers</button>
+        </div>
       </form>}
     </>
   )

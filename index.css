@@ -43,8 +43,9 @@ input[type="radio"] {
     font-size: 18px;
     text-shadow: 0.8px 0.5px black;
 }
-#checkAns{
-    display: block;
+.scoreDiv{
+    display: flex;
+    gap: 30px;
     margin: 50px auto;
 }
 .answer{
@@ -69,4 +70,7 @@ input[type="radio"] {
 
 .checkedHighlight{
     background-color: #D6DBF5;
+}
+.scoreElement{
+    display: none;
 }
