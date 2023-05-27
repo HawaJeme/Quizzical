@@ -7,11 +7,11 @@ import {decode} from 'html-entities';
 function App() {
   const [questionObjs, setQuestionObjs] = useState([])
   const [quizStart, setQuizStart] = useState(false)
-  const highlights = document.getElementsByClassName('checkedHighlight')
+  const highlights = document.getElementsByClassName("checkedHighlight")
   let correctAns = []
   let scores = 0
 
-  useEffect(()=>{
+  const fetchQuestions = () => {
     fetch("https://opentdb.com/api.php?amount=5&type=multiple")
       .then(Response => Response.json())
       .then(data => {
@@ -23,7 +23,12 @@ function App() {
           }
           setQuestionObjs(arr)
         })
+  }
+
+  useEffect(()=>{
+    fetchQuestions()
   }, [])
+
   useEffect(()=> {
     document.getElementById("start-quiz").addEventListener('click', ()=> {
         document.querySelector(".interface").style.display = "none"
@@ -45,7 +50,7 @@ function App() {
           ans.style.backgroundColor = "#4CB261" // green
         }
         else if(ans.children[0].value !== decode(obj.correct_answer)
-        && ans.classList.contains('checkedHighlight')){
+        && ans.classList.contains("checkedHighlight")){
           ans.style.backgroundColor = "#F88686" //red
         }
       }
@@ -55,14 +60,16 @@ function App() {
     document.querySelector(".scoreElement").style.display = "inline"
     document.getElementById("checkAns").textContent = 'Play again'
   }
+  
   function highlightAns(e){
     for (let highlight of highlights){ // For removing highlighted answers of the same question
       if(e.target.parentElement.id === highlight.id){
-        highlight.classList.remove('checkedHighlight')
+        highlight.classList.remove("checkedHighlight")
       }
     }
     e.target.parentElement.classList.add("checkedHighlight") // adding highlight class to checked answers
   }
+
   function calculateScores(){
     for(let highlight of highlights){
       if(correctAns.includes(decode(highlight.children[0].value))){
