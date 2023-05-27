@@ -41,6 +41,7 @@ function App() {
     e.preventDefault()
 
     if(document.getElementById("checkAns").textContent === 'Play again'){
+      setQuizStart(false)
       location.reload()
     }
     questionObjs.map(obj =>{    // to check correct answers
@@ -60,7 +61,7 @@ function App() {
     document.querySelector(".scoreElement").style.display = "inline"
     document.getElementById("checkAns").textContent = 'Play again'
   }
-  
+
   function highlightAns(e){
     for (let highlight of highlights){ // For removing highlighted answers of the same question
       if(e.target.parentElement.id === highlight.id){
