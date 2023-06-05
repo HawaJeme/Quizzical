@@ -6,18 +6,18 @@ export default function Questions(props){
     let randomIndex = Math.floor(Math.random() * (answers.length + 1))
     answers.splice(randomIndex, 0, props.correctAns)
 
-    const answerElements = answers.map(ans => {
-        return (
-            <label className="answer" id={props.keys}>
-                <input type="radio"
-                    name={`${props.keys}`}
-                    value={ans}
-                    onClick={(e)=> props.highlightAns(e)}>
-                </input>
-                {decode(ans)}
-            </label>
-        )
-    })
+    const answerElements = answers.map((ans, index) => (
+        <label className="answer" id={props.keys} key={index}>
+            <input 
+                type="radio"
+                required
+                value={ans}
+                onClick={(e)=> props.highlightAns(e)}>
+            </input>
+            {decode(ans)}
+        </label>
+    ))
+
     return(
         <>
             <h2>{decode(props.question)}</h2>
